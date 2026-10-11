@@ -1,0 +1,74 @@
+name: gridcraft
+title: GridCraft
+base: core24
+version: '0.5.0'
+summary: Spreadsheet for calculating, analysing and charting data
+description: |
+  GridCraft is an open-source, native spreadsheet for calculating, analysing and charting data in workbooks, with support for Excel (XLSX) and CSV files.
+
+  GridCraft is part of the open-source ArtCraft "Crafting Apps": a native Rust
+  application that runs locally on your own files and can be driven from a CLI,
+  a JSON control channel or an MCP server.
+
+  This snap repackages the official upstream Linux release. The headless
+  command line tool is available as gridcraft.cli.
+license: MIT OR Apache-2.0
+website: https://getartcraft.com/apps/gridcraft
+source-code: https://github.com/storytold/gridcraft
+issues: https://github.com/storytold/gridcraft/issues
+contact: https://github.com/kenvandine/gridcraft-snap/issues
+icon: snap/gui/gridcraft.png
+grade: stable
+confinement: strict
+
+platforms:
+  amd64:
+  arm64:
+
+apps:
+  gridcraft:
+    command: bin/gridcraft
+    extensions: [gnome]
+    common-id: ai.storyteller.gridcraft
+    plugs:
+      - audio-playback
+      - home
+      - network
+      - network-bind
+      - opengl
+      - removable-media
+  cli:
+    command: bin/gridcraft-cli
+    extensions: [gnome]
+    plugs:
+      - home
+      - network
+      - network-bind
+      - removable-media
+
+parts:
+  gridcraft:
+    plugin: nil
+    build-packages:
+      - ca-certificates
+      - curl
+    stage-packages:
+      - libvulkan1
+      - libxkbcommon-x11-0
+    override-pull: |
+      set -eu
+      case "$CRAFT_ARCH_BUILD_FOR" in
+        amd64) arch=x86_64 ;;
+        arm64) arch=aarch64 ;;
+        *) echo "unsupported architecture: $CRAFT_ARCH_BUILD_FOR" >&2; exit 1 ;;
+      esac
+      name="gridcraft-${CRAFT_PROJECT_VERSION}-linux-${arch}"
+      url="https://github.com/storytold/gridcraft/releases/download/v${CRAFT_PROJECT_VERSION}"
+      curl -fsSL --retry 3 -o "${name}.tar.gz" "${url}/${name}.tar.gz"
+      curl -fsSL --retry 3 -o SHA256SUMS.txt "${url}/SHA256SUMS.txt"
+      grep -E "[ *]${name}\.tar\.gz\$" SHA256SUMS.txt | sha256sum -c -
+      tar xzf "${name}.tar.gz" --strip-components=1
+      rm -f "${name}.tar.gz" SHA256SUMS.txt
+    override-build: |
+      set -eu
+      cp -a bin share "$CRAFT_PART_INSTALL/"

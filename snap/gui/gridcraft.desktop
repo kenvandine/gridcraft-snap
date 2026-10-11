@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=GridCraft
+GenericName=Spreadsheet
+Comment=Calculate, analyse and chart data in workbooks
+Exec=gridcraft %F
+Icon=${SNAP}/meta/gui/gridcraft.png
+Terminal=false
+StartupNotify=true
+StartupWMClass=ai.storyteller.gridcraft
+Categories=Office;Spreadsheet;
+Keywords=spreadsheet;workbook;sheet;table;formula;chart;pivot;xlsx;csv;tsv;excel;
+MimeType=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.ms-excel.sheet.macroEnabled.12;text/csv;text/tab-separated-values;
