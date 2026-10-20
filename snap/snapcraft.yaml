@@ -1,7 +1,7 @@
 name: gridcraft
 title: GridCraft
 base: core24
-version: '0.8.0'
+version: '0.9.0'
 summary: Spreadsheet for calculating, analysing and charting data
 description: |
   GridCraft is an open-source, native spreadsheet for calculating, analysing and charting data in workbooks, with support for Excel (XLSX) and CSV files.
