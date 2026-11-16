@@ -1,6 +1,6 @@
 name: gridcraft
 title: GridCraft
-base: core24
+base: core26
 version: '0.19.1'
 summary: Spreadsheet for calculating, analysing and charting data
 description: |
